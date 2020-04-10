@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
    
     #year of temps by hour
-    fig, ax = plt.subplots(2,figsize = (20,10))
+    fig, ax = plt.subplots(2,figsize = (11,10))
     ax[0].title.set_text("Denver temperatures by hour")
     ax[0].plot(df_temp_2012['datetime'],df_temp_2012['Denver'],color = "tab:red")
    
@@ -172,8 +172,9 @@ if __name__ == "__main__":
  
     #calc and plot
     #daily mean, max, min 
+    plt.figure(figsize = (14,10))
     plt.plot(df_temp_2012['datetime'],df_temp_2012['Denver'],color = "tab:red",alpha =.25)
-    plt.title("Denver temperatures by hour")
+    plt.title("Denver daily temperatures")
     
     
     
@@ -190,8 +191,10 @@ if __name__ == "__main__":
     plt.savefig('img/den_temp_avg-min-max_2013')
     plt.show()
 
+
+    plt.figure(figsize = (14,10))
     plt.plot(df_temp_2012_sd['datetime'],df_temp_2012_sd['San Diego'],color = "tab:red",alpha =.25)
-    plt.title("San Diego temperatures by hour")
+    plt.title("Denver daily temperatures")
     df_temp_2012_daily_mean_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].mean()
     df_temp_2012_daily_min_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].min()
     df_temp_2012_daily_max_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].max()
