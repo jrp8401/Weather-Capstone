@@ -45,14 +45,17 @@ def mean_town(df_temps_year,city,plot=False):
     agg_temp = pd.concat(means ,axis =1)
     agg_temp = agg_temp[:-1]
     
-    agg_temp['mean'] = agg_temp.mean(axis=1)
-    agg_temp.reset_index().plot(x='index',y ='mean')
+    agg_temp['Daily mean temperature'] = agg_temp.mean(axis=1)
+    agg_temp.reset_index().plot(x='index',y ='Daily mean temperature')
 
-    temp_var = agg_temp['mean'].var()
+    temp_var = agg_temp['Daily mean temperature'].var()
     if plot:
-        plt.axhline(y=agg_temp['mean'].mean())
+        
+        plt.title(("{} daily temperatures").format(city), fontsize=20)
+        plt.axhline(y=agg_temp['Daily mean temperature'].mean(),color = "tab:red",label = 'Average daily temperature')
         plt.ylim(-5,100)
         file = 'img/{}_avg'.format(city)
+        plt.legend()
         plt.savefig(file)
         plt.show()
     return temp_var
@@ -106,8 +109,8 @@ if __name__ == "__main__":
     #df_description_2012 = split_by_date(df_description,date_start,date_end)
 
     #filter by city
-    # den_var = mean_town(df_temps_year,'Denver',True)
-    # sd_var =mean_town(df_temps_year, "San Diego",True)
+    den_var = mean_town(df_temps_year,'Denver',True)
+    sd_var =mean_town(df_temps_year, "San Diego",True)
     
     #calc var for every city
     # cities =df_temp.columns[1:]
@@ -167,7 +170,7 @@ if __name__ == "__main__":
     ax[1].plot(df_temp_2012_sd['datetime'],df_temp_2012_sd['San Diego'],color = "tab:red")
     plt.ylim(-5,100)
     plt.savefig('img/city_temp_hourly_2013')
-    plt.show()
+    #plt.show()
     
  
     #calc and plot
@@ -189,7 +192,7 @@ if __name__ == "__main__":
     plt.legend()
     plt.ylim(-5,100) 
     plt.savefig('img/den_temp_avg-min-max_2013')
-    plt.show()
+    #plt.show()
 
 
     plt.figure(figsize = (13,10))
@@ -205,7 +208,7 @@ if __name__ == "__main__":
     plt.legend()
     plt.ylim(-5,100)
     plt.savefig('img/sd_temp_avg-min-max_2013')
-    plt.show()
+    #plt.show()
 
     
     
@@ -250,10 +253,11 @@ if __name__ == "__main__":
     df_fall_temp_max = df_temp_2012.groupby([df_fall_temp['datetime'].dt.date])['Denver'].max()
     df_fall_temp_min = df_temp_2012.groupby([df_fall_temp['datetime'].dt.date])['Denver'].min()
    
-    fig, axes =plt.subplots(2,2,figsize = (12,10))
-    axes[0,0].plot(df_winter_temp_mean)
-    axes[0,0].plot(df_winter_temp_max)
-    axes[0,0].plot(df_winter_temp_min)
+    
+    fig, axes =plt.subplots(2,2,figsize = (14,20))
+    axes[0,0].plot(df_winter_temp_mean,label="daily mean temperature")
+    axes[0,0].plot(df_winter_temp_max,label="daily max temperature")
+    axes[0,0].plot(df_winter_temp_min,label="daily min temperature")
     axes[0,0].set_title('Winter')
     axes[0,1].plot(df_spring_temp_mean) 
     axes[0,1].plot(df_spring_temp_max) 
@@ -269,8 +273,12 @@ if __name__ == "__main__":
     axes[1,1].set_title('Fall')
     for ax in axes.flatten():
          ax.set_ylim(-5,100)
+    fig.suptitle("Denver daily temperatures by season", fontsize=20)
+    fig.autofmt_xdate()
+    fig.legend()
     plt.savefig('img/den_seas_temp_avg-min-max_2013')
-    plt.show()
+    
+    #plt.show()
 
 
 
@@ -291,10 +299,11 @@ if __name__ == "__main__":
     df_fall_temp_max_sd = df_temp_2012_sd.groupby([df_fall_temp_sd['datetime'].dt.date])['San Diego'].max()
     df_fall_temp_min_sd = df_temp_2012_sd.groupby([df_fall_temp_sd['datetime'].dt.date])['San Diego'].min()
    
-    fig, axes =plt.subplots(2,2,figsize = (12,10))
-    axes[0,0].plot(df_winter_temp_mean_sd)
-    axes[0,0].plot(df_winter_temp_max_sd)
-    axes[0,0].plot(df_winter_temp_min_sd)
+   
+    fig, axes =plt.subplots(2,2,figsize = (14,20))
+    axes[0,0].plot(df_winter_temp_mean_sd,label="daily mean temperature")
+    axes[0,0].plot(df_winter_temp_max_sd,label="daily max temperature")
+    axes[0,0].plot(df_winter_temp_min_sd,label="daily min temperature")
     axes[0,0].set_title('Winter')
     axes[0,1].plot(df_spring_temp_mean_sd) 
     axes[0,1].plot(df_spring_temp_max_sd) 
@@ -310,8 +319,12 @@ if __name__ == "__main__":
     axes[1,1].set_title('Fall')
     for ax in axes.flatten():
          ax.set_ylim(-5,100)
+    fig.suptitle("San Diego daily temperatures by season", fontsize=20)   
+   
+    fig.autofmt_xdate()
+    fig.legend()
     plt.savefig('img/sd_seas_temp_avg-min-max_2013')     
-    plt.show()
+    #plt.show()
 
    
     
