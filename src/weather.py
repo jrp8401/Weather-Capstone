@@ -175,7 +175,7 @@ if __name__ == "__main__":
  
     #calc and plot
     #daily mean, max, min 
-    plt.figure(figsize = (13,10))
+    plt.figure(figsize = (13,9))
     plt.plot(df_temp_2012['datetime'],df_temp_2012['Denver'],color = "tab:red",alpha =.25)
     plt.title("Denver daily temperatures", fontsize=20)
     
@@ -195,7 +195,7 @@ if __name__ == "__main__":
     #plt.show()
 
 
-    plt.figure(figsize = (13,10))
+    plt.figure(figsize = (13,9))
     plt.plot(df_temp_2012_sd['datetime'],df_temp_2012_sd['San Diego'],color = "tab:red",alpha =.25)
     plt.title("San Diego daily temperatures", fontsize=20)
     df_temp_2012_daily_mean_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].mean()
@@ -254,7 +254,7 @@ if __name__ == "__main__":
     df_fall_temp_min = df_temp_2012.groupby([df_fall_temp['datetime'].dt.date])['Denver'].min()
    
     
-    fig, axes =plt.subplots(2,2,figsize = (14,20))
+    fig, axes =plt.subplots(2,2,figsize = (14,15))
     axes[0,0].plot(df_winter_temp_mean,label="daily mean temperature")
     axes[0,0].plot(df_winter_temp_max,label="daily max temperature")
     axes[0,0].plot(df_winter_temp_min,label="daily min temperature")
@@ -300,7 +300,7 @@ if __name__ == "__main__":
     df_fall_temp_min_sd = df_temp_2012_sd.groupby([df_fall_temp_sd['datetime'].dt.date])['San Diego'].min()
    
    
-    fig, axes =plt.subplots(2,2,figsize = (14,20))
+    fig, axes =plt.subplots(2,2,figsize = (14,15))
     axes[0,0].plot(df_winter_temp_mean_sd,label="daily mean temperature")
     axes[0,0].plot(df_winter_temp_max_sd,label="daily max temperature")
     axes[0,0].plot(df_winter_temp_min_sd,label="daily min temperature")
