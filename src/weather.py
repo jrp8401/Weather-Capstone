@@ -172,9 +172,9 @@ if __name__ == "__main__":
  
     #calc and plot
     #daily mean, max, min 
-    plt.figure(figsize = (14,10))
+    plt.figure(figsize = (13,10))
     plt.plot(df_temp_2012['datetime'],df_temp_2012['Denver'],color = "tab:red",alpha =.25)
-    plt.title("Denver daily temperatures")
+    plt.title("Denver daily temperatures", fontsize=20)
     
     
     
@@ -192,9 +192,9 @@ if __name__ == "__main__":
     plt.show()
 
 
-    plt.figure(figsize = (14,10))
+    plt.figure(figsize = (13,10))
     plt.plot(df_temp_2012_sd['datetime'],df_temp_2012_sd['San Diego'],color = "tab:red",alpha =.25)
-    plt.title("Denver daily temperatures")
+    plt.title("San Diego daily temperatures", fontsize=20)
     df_temp_2012_daily_mean_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].mean()
     df_temp_2012_daily_min_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].min()
     df_temp_2012_daily_max_sd = df_temp_2012_sd.groupby([df_temp_2012_sd['datetime'].dt.date])['San Diego'].max()
@@ -207,14 +207,7 @@ if __name__ == "__main__":
     plt.savefig('img/sd_temp_avg-min-max_2013')
     plt.show()
 
-    #aggregate
-    # df_temp_2012_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    # df_temp_2013_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    # df_temp_2014_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    # df_temp_2015_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    # df_temp_2016_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
     
-   
     
 
 
@@ -257,7 +250,7 @@ if __name__ == "__main__":
     df_fall_temp_max = df_temp_2012.groupby([df_fall_temp['datetime'].dt.date])['Denver'].max()
     df_fall_temp_min = df_temp_2012.groupby([df_fall_temp['datetime'].dt.date])['Denver'].min()
    
-    fig, axes =plt.subplots(2,2)
+    fig, axes =plt.subplots(2,2,figsize = (12,10))
     axes[0,0].plot(df_winter_temp_mean)
     axes[0,0].plot(df_winter_temp_max)
     axes[0,0].plot(df_winter_temp_min)
@@ -298,7 +291,7 @@ if __name__ == "__main__":
     df_fall_temp_max_sd = df_temp_2012_sd.groupby([df_fall_temp_sd['datetime'].dt.date])['San Diego'].max()
     df_fall_temp_min_sd = df_temp_2012_sd.groupby([df_fall_temp_sd['datetime'].dt.date])['San Diego'].min()
    
-    fig, axes =plt.subplots(2,2)
+    fig, axes =plt.subplots(2,2,figsize = (12,10))
     axes[0,0].plot(df_winter_temp_mean_sd)
     axes[0,0].plot(df_winter_temp_max_sd)
     axes[0,0].plot(df_winter_temp_min_sd)
