@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
+
 def import_weather_data(file_path):
     #import file drops empty 1st row
     df_inter = pd.read_csv(file_path)
@@ -26,7 +27,38 @@ def filter_strange_outliers(df_year,city):
     for i in range(len(df_year[city])-1):
         while i<len(df_year[city])-1 and (abs(df_year.iloc[i][city]-df_year.iloc[i+1][city]))>14:
             df_year.drop(df_year.index[i+1],inplace = True) 
+
+def mean_town(df_temps_year,city,plot=False):
+    df_temp_2012 =  df_temps_year[0][['datetime',city]]
+    df_temp_2013 =  df_temps_year[1][['datetime',city]]
+    df_temp_2014 =  df_temps_year[2][['datetime',city]]
+    df_temp_2015 =  df_temps_year[3][['datetime',city]]
+    df_temp_2016 =  df_temps_year[4][['datetime',city]]
+    temps = [df_temp_2012,df_temp_2013,df_temp_2014,df_temp_2015,df_temp_2016]
+    means = []
+    for i in temps:
+        df_temps=i.copy()
+        filter_strange_outliers(df_temps,city)
+        means.append(df_temps.groupby([df_temps['datetime'].dt.date])[city].mean())
+    for i in means:
+        i.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
+    agg_temp = pd.concat(means ,axis =1)
+    agg_temp = agg_temp[:-1]
+    
+    agg_temp['mean'] = agg_temp.mean(axis=1)
+    agg_temp.reset_index().plot(x='index',y ='mean')
+
+    temp_var = agg_temp['mean'].var()
+    if plot:
+        plt.axhline(y=agg_temp['mean'].mean())
+        plt.ylim(-5,100)
+        file = 'img/{}_avg'.format(city)
+        plt.savefig(file)
+        plt.show()
+    return temp_var
+
    
+
 if __name__ == "__main__":
     #import weather csv files
     #df_humid= import_weather_data('data/humidity.csv')
@@ -74,66 +106,50 @@ if __name__ == "__main__":
     #df_description_2012 = split_by_date(df_description,date_start,date_end)
 
     #filter by city
-    #df_humid_2012 =  df_humid_2012[['datetime','Denver']]
-    df_temp_2012_den =  df_temps_year[0][['datetime','Denver']]
-    df_temp_2013_den =  df_temps_year[1][['datetime','Denver']]
-    df_temp_2014_den =  df_temps_year[2][['datetime','Denver']]
-    df_temp_2015_den =  df_temps_year[3][['datetime','Denver']]
-    df_temp_2016_den =  df_temps_year[4][['datetime','Denver']]
+    den_var = mean_town(df_temps_year,'Denver',True)
+    sd_var =mean_town(df_temps_year, "San Diego",True)
+    
+    #calc var for every city
+    # cities =df_temp.columns[1:]
+    # daily_mean_temp_var =[]
+    # for i in cities:
+    #     daily_mean_temp_var.append(mean_town(df_temps_year,i))
+    # var_tuples = list(zip(cities,daily_mean_temp_var))
+    # df_daily_mean_temp_var = pd.DataFrame(var_tuples, columns =['City', "Daily avg temperature variance"])
 
-   
 
-    df_temp_2012_sd =  df_temps_year[0][['datetime','San Diego']]
-    df_temp_2013_sd =  df_temps_year[1][['datetime','San Diego']]
-    df_temp_2014_sd =  df_temps_year[2][['datetime','San Diego']]
-    df_temp_2015_sd =  df_temps_year[3][['datetime','San Diego']]
-    df_temp_2016_sd =  df_temps_year[4][['datetime','San Diego']]
+  
+    # df_daily_mean_temp_var.savefig('daily_mean_temp_var.png')
+
 
     
+    
 
+    
+    #df_humid_2012 =  df_humid_2012[['datetime','Denver']]
     #df_pres_2012 =  df_pres_2012[['datetime','Denver']]
     #df_wind_2012 =  df_wind_2012[['datetime','Denver']]
-    #df_description_2012 =  df_description_2012[['datetime','Denver']] 
+    #df_description_2012 =  df_description_2012[['datetime','Denver']]  
     #print(df_description_2012['Denver'].unique())
 
     #drop inaccurate pressures
     #df_pres_2012.drop(df_pres_2012[df_pres_2012['Denver']<990].index,inplace = True)
     #df_pres_2012.drop(df_pres_2012[df_pres_2012['Denver']>1045].index,inplace = True)
 
+    
+    # one year temp data
+    df_temp_2012_den =  df_temps_year[0][['datetime','Denver']]
+
     df_temp_2012=df_temp_2012_den.copy()
     filter_strange_outliers(df_temp_2012,'Denver')
-    df_temp_2012_daily_mean = df_temp_2012.groupby([df_temp_2012['datetime'].dt.date])['Denver'].mean()
-
-    df_temp_2013=df_temp_2013_den.copy()
-    filter_strange_outliers(df_temp_2013,'Denver')
-    df_temp_2013_daily_mean = df_temp_2013.groupby([df_temp_2013['datetime'].dt.date])['Denver'].mean()
-
-    df_temp_2014=df_temp_2014_den.copy()
-    filter_strange_outliers(df_temp_2014,'Denver')
-    df_temp_2014_daily_mean = df_temp_2014.groupby([df_temp_2014['datetime'].dt.date])['Denver'].mean()
-
-    df_temp_2015=df_temp_2015_den.copy()
-    filter_strange_outliers(df_temp_2015,'Denver')
-    df_temp_2015_daily_mean = df_temp_2015.groupby([df_temp_2015['datetime'].dt.date])['Denver'].mean()
-
-    df_temp_2016=df_temp_2016_den.copy()
-    filter_strange_outliers(df_temp_2016,'Denver')
-    df_temp_2016_daily_mean = df_temp_2016.groupby([df_temp_2016['datetime'].dt.date])['Denver'].mean()
-   
-
-
     
-    df_temp_y_sd = df_temp_2012_sd.copy()
-    filter_strange_outliers(df_temp_y_sd,'San Diego')
-    #calc nans    
    
-    print(1-(len(df_temp_2012['Denver'].dropna())/len(df_temp_2012_den)))
-    print(1-(len(df_temp_2013['Denver'].dropna())/len(df_temp_2013_den)))
-    print(1-(len(df_temp_2014['Denver'].dropna())/len(df_temp_2014_den)))
-    print(1-(len(df_temp_2015['Denver'].dropna())/len(df_temp_2015_den)))
-    print(1-(len(df_temp_2016['Denver'].dropna())/len(df_temp_2016_den)))
 
-    print(1-(len(df_temp_y_sd['San Diego'].dropna())/len(df_temp_2012_sd)))
+
+    df_temp_2012_sd_c =  df_temps_year[0][['datetime','San Diego']]
+    df_temp_2012_sd = df_temp_2012_sd_c.copy()
+    filter_strange_outliers(df_temp_2012_sd,'San Diego')
+    
     
    
     
@@ -162,7 +178,7 @@ if __name__ == "__main__":
     
     
     
-    
+    df_temp_2012_daily_mean = df_temp_2012.groupby([df_temp_2012['datetime'].dt.date])['Denver'].mean()
     df_temp_2012_daily_min = df_temp_2012.groupby([df_temp_2012['datetime'].dt.date])['Denver'].min()
     df_temp_2012_daily_max = df_temp_2012.groupby([df_temp_2012['datetime'].dt.date])['Denver'].max()
    
@@ -189,19 +205,14 @@ if __name__ == "__main__":
     plt.show()
 
     #aggregate
-    df_temp_2012_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    df_temp_2013_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    df_temp_2014_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    df_temp_2015_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    df_temp_2016_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
-    agg_temp = pd.concat([df_temp_2012_daily_mean,df_temp_2013_daily_mean,df_temp_2014_daily_mean,df_temp_2015_daily_mean,df_temp_2016_daily_mean] ,axis =1)
-    agg_temp = agg_temp[:-1]
+    # df_temp_2012_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
+    # df_temp_2013_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
+    # df_temp_2014_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
+    # df_temp_2015_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
+    # df_temp_2016_daily_mean.rename(index = lambda s: s.strftime('%m-%d'),inplace=True)
     
-    agg_temp['mean'] = agg_temp.mean(axis=1)
-    agg_temp.reset_index().plot(x='index',y ='mean')
-    plt.savefig('img/den_avg')
-    plt.show()
    
+    
 
 
     #seasonal
