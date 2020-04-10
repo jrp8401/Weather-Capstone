@@ -106,8 +106,8 @@ if __name__ == "__main__":
     #df_description_2012 = split_by_date(df_description,date_start,date_end)
 
     #filter by city
-    den_var = mean_town(df_temps_year,'Denver',True)
-    sd_var =mean_town(df_temps_year, "San Diego",True)
+    # den_var = mean_town(df_temps_year,'Denver',True)
+    # sd_var =mean_town(df_temps_year, "San Diego",True)
     
     #calc var for every city
     # cities =df_temp.columns[1:]
@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
    
     #year of temps by hour
-    fig, ax = plt.subplots(2)
+    fig, ax = plt.subplots(2,figsize = (20,10))
     ax[0].title.set_text("Denver temperatures by hour")
     ax[0].plot(df_temp_2012['datetime'],df_temp_2012['Denver'],color = "tab:red")
    
