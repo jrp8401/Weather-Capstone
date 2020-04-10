@@ -13,7 +13,7 @@ Upon importing the files to dataframes and conducting some exploratory analysis 
 
 
 # Visualization 
-I started my data analysis by breaking down the data and first plotting the hourly temperatures in Denver over a whole year. These hourly measurements show the seasonal fluctuations of temperature over the year, cooling down during the fall and warming up in the spring. In the graph below the temperatures from San Diego show a less pronounced change in seasons as well as a tighter range of temperatures. 
+I started my data analysis by breaking down the data and first plotting the hourly temperatures in Denver over a whole year. These hourly measurements show the seasonal fluctuations of temperature over the year, cooling down during the fall and warming up in the spring. In the graph below, the temperatures from San Diego show a less pronounced change in seasons as well as a tighter range of temperatures. 
 ![city temp](https://github.com/jrp8401/Weather-Capstone/blob/master/img/city_temp_hourly_2013.png)
 I then decided to break it down further, looking at the daily average temperature across the year along with the daily min and max temperature. Again we can see the jagged and fluctuating range of the Denver weather compared to the less dramatic San Diego temperatures. 
 ![den_temp_avg/min/max](https://github.com/jrp8401/Weather-Capstone/blob/master/img/den_temp_avg-min-max_2013.png)
@@ -70,5 +70,5 @@ Since I had 5 years of data I wanted to look at the average temperatures across 
 
 
 # Conclusion
-Having lived in Colorado and Southern California, the difference between their respective weather trends is obvious. However I thought it would be interesting to use data to support that claim. By calculating the daily mean temperatures for a city and comparing them to the average daily temperature I can see how dramatically the weather varies over a year. 
+Having lived in Colorado and Southern California, the difference between their respective weather trends is obvious. However I thought it would be interesting to use data to support that claim. By calculating the daily mean temperatures for a city and comparing them to the average daily temperature I can see how the temperature varies from the average over a year. 
 
