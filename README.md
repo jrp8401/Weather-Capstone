@@ -16,14 +16,12 @@ Upon importing the files to dataframes and conducting some exploratory analysis 
 ![city temp](https://github.com/jrp8401/Weather-Capstone/blob/master/img/city_temp_hourly_2013.png)
 
 ![den_temp_avg/min/max](https://github.com/jrp8401/Weather-Capstone/blob/master/img/den_temp_avg-min-max_2013.png)
-
 ![sd_temp_avg/min/max](https://github.com/jrp8401/Weather-Capstone/blob/master/img/sd_temp_avg-min-max_2013.png)
-
 ![den_seas_temp_min/max](https://github.com/jrp8401/Weather-Capstone/blob/master/img/den_seas_temp_avg-min-max_2013.png)
-
 ![sd_seas_temp_min/max](https://github.com/jrp8401/Weather-Capstone/blob/master/img/sd_seas_temp_avg-min-max_2013.png)
 
-![den_temp_avg](https://github.com/jrp8401/Weather-Capstone/blob/master/img/den_avg.png)
+![den_temp_avg](https://github.com/jrp8401/Weather-Capstone/blob/master/img/Denver_avg.png)
+![sd_temp_avg](https://github.com/jrp8401/Weather-Capstone/blob/master/img/San%20Diego_avg.png)
 
 
 
